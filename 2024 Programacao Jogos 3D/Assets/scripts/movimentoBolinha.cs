@@ -89,7 +89,7 @@ public class movimentoBolinha : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.name == "chao")
+        if (collision.collider.tag == "chao")
         {
             estaNoChao = false;
         }
