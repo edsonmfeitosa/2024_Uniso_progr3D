@@ -75,8 +75,17 @@ public class movimentoBolinha : MonoBehaviour
         //pulo da bolinha
         if (Input.GetKeyDown(teclaPulo) && estaNoChao)
         {
-            fisica.AddForce(new Vector3(0, 1, 0) *
+            if (SuperPulo.usarSuperPulo)
+            {
+                fisica.AddForce(new Vector3(0, 1, 0) *
+                forcaPulo * 2, ForceMode.Impulse);
+            }
+            else
+            {
+                fisica.AddForce(new Vector3(0, 1, 0) *
                 forcaPulo, ForceMode.Impulse);
+            }
+
         }
 
     }
