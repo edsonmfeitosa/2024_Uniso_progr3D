@@ -17,7 +17,7 @@ public class movimentoAviaoController : MonoBehaviour
     [SerializeField] private KeyCode freio;
     private float velocidade = 0;
 
-    private bool ligado = false;
+    public bool ligado = false;
 
     void Start()
     {
