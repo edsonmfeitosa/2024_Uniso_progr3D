@@ -20,15 +20,30 @@ public class movimentoBolinha : MonoBehaviour
     [SerializeField] private KeyCode paraDireita;
     [SerializeField] private KeyCode teclaPulo;
 
+    [Header("Configuração de sons")]
+    [SerializeField] private AudioClip somDePulo;
+    [SerializeField] private AudioClip somdeMorte;
+    [SerializeField] private AudioClip somdeItem;
+    private AudioSource som;
+    private Vector3 posicaoAtual;
+
     // Start is called before the first frame update
     void Start()
     {
         fisica = GetComponent<Rigidbody>();
+        som = GetComponent<AudioSource>();
+        posicaoAtual = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.y < -5)
+        {
+            transform.position = posicaoAtual;
+            som.PlayOneShot(somdeMorte);
+        }
+
         #region 1ª forma de pegar o Input
 
         //movX = Input.GetAxis("Horizontal");
@@ -75,6 +90,12 @@ public class movimentoBolinha : MonoBehaviour
         //pulo da bolinha
         if (Input.GetKeyDown(teclaPulo) && estaNoChao)
         {
+            if (!som.isPlaying)
+            {
+                som.clip = somDePulo;
+                som.Play();
+            }
+            
             if (SuperPulo.usarSuperPulo)
             {
                 fisica.AddForce(new Vector3(0, 1, 0) *
@@ -94,6 +115,15 @@ public class movimentoBolinha : MonoBehaviour
         if (collision.collider.name == "chao")
         {
             estaNoChao = true;
+        }
+        if (collision.collider.tag == "tesouro")
+        {
+            if (!som.isPlaying)
+            {
+                som.clip = somdeItem;
+                som.Play();
+            }
+            
         }
     }
     private void OnCollisionExit(Collision collision)
